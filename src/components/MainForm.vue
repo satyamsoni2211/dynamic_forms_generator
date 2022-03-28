@@ -2,20 +2,21 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="6">
+        <v-col lg="6" xl="6" md="6" sm="12">
           <v-jsoneditor
             v-model="json"
             :options="options"
             :plus="true"
             height="100%"
             @error="onError"
+            @input="error = false"
           />
         </v-col>
-        <v-col cols="6" tile outlined>
+        <v-col lg="6" xl="6" md="6" sm="12" tile outlined>
           <FormulateForm
             v-on:submit="handleform"
             :schema="json"
-            v-if="Object.keys(json).length"
+            v-if="Object.keys(json).length && !error"
           >
           </FormulateForm>
           <p v-else>Please start creating template</p>
@@ -40,6 +41,7 @@
 export default {
   data() {
     return {
+      error: false,
       form: {},
       json: [
         {
@@ -82,6 +84,7 @@ export default {
       console.log(form);
     },
     onError(e) {
+      this.error = true;
       console.log(e);
     },
   },
